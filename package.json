@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "discord.js": "^14.14.1",
     "djst-client": "^1.6.1",
     "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"

@@ -8,27 +8,10 @@ const client = new Discord.Client({
     initCommands: true
 })
 
-var globalJam = new Date().getHours()
-var globalMenit = new Date().getMinutes()
-globalMenit = globalMenit < 10 ? '0' + globalMenit : globalMenit
-var globalWaktu = `${globalJam}:${globalMenit}`
-console.log(globalWaktu)
 
 // Help - list command
 client.generateHelpCommand();
 
-if (globalWaktu == '17:06') {
-    client.createCommand({
-        name: 'tes',
-        aliases: ['tes juga'],
-        cooldown: 2,
-        description: 'tes',
-        execute: async (message, args, bot) => {
-            message.channel.send('ayo pulang')
-            console.log('sudah kekirim')
-        }
-    })
-}
 
 client.createCommand({
     category: 'random',
@@ -37,7 +20,7 @@ client.createCommand({
     cooldown: 3,
     description: "Simple Command",
     execute: async (message, args, bot) => {
-        message.channel.send("Halooo")
+        message.channel.send("p aku masih idup bang")
     }
 })
 
@@ -105,7 +88,9 @@ client.createCommand({
     execute: async (message, args, bot) => {
         let bulan = new Date().getMonth()
         let bulanApa = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            'Januari', 'Februari', 'Maret', 'April', 'Mei',
+            'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
+            'November', 'Desember'
         ]
         let iniBulan = bulanApa[bulan]
         message.channel.send(`Sekarang bulan ${iniBulan}`)
@@ -122,6 +107,7 @@ client.createCommand({
         try {
             let tanggal = new Date().getDate()
             let bulan = new Date().getMonth()
+            bulan = bulan + 1
             bulan = bulan < 10 ? '0' + bulan : bulan
             let tahun = new Date().getFullYear()
             message.channel.send(`Sekarang tanggal ${tanggal}-${bulan}-${tahun}`)
@@ -131,23 +117,164 @@ client.createCommand({
     }
 })
 
+client.createCommand({
+    category: 'waktu',
+    name: 'prakerin',
+    aliases: ['kapan prakerin selesai?'],
+    cooldown: 2,
+    description: 'tanya prakerin berapa hari lagi',
+    execute: async (message, args, bot) => {
+        const tanggalSekarang = new Date()
+        const selesaiPrakerin = new Date('2024-04-30')
+        const selisihHari = selesaiPrakerin - tanggalSekarang
+        const hasil = Math.ceil(selisihHari / (1000 * 3600 * 24))
+        message.channel.send(`Prakerin mu sisa ${hasil} hari lagi`)
+    }
+})
+
+
+client.createCommand({
+    category: 'waktu',
+    name: 'istirahat',
+    aliases: ['kapan istirahat?'],
+    cooldown: 2,
+    description: 'tanya istirahat berapa hari lagi',
+    execute: async (message, args, bot) => {
+        const today = new Date()
+        const istirahat = new Date()
+        istirahat.setHours(12, 0, 0, 0)
+        let itung = istirahat - today
+        let hasil = Math.ceil(itung / (1000 * 60))
+        let Hitungjam = hasil / 60
+        let jam = Math.round(Hitungjam)
+        // let hasil = 10
+        if (hasil <= 0) {
+            message.channel.send(`Istirahat mulu`)
+        } else {
+            message.channel.send(`Sabar istirahat masih sekitar ${jam} jam / ${hasil} menit lagi`)
+        }
+    }
+})
+
+client.createCommand({
+    category: 'waktu',
+    name: 'pulang',
+    aliases: ['kapan pulang?'],
+    description: 'tanya kapan pulang',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        const today = new Date()
+        const pulang = new Date()
+        pulang.setHours(16, 0, 0, 0)
+        let itung = pulang - today
+        let hasil = Math.ceil(itung / (1000 * 60))
+        let hitungJam = hasil / 60
+        let jam = Math.round(hitungJam)
+        message.channel.send(`Pulang masih sekitar ${jam} jam / ${hasil} menit lagi`)
+    }
+})
+
+client.createCommand({
+    category: 'random',
+    name: 'tidur',
+    aliases: ['mau tidur?'],
+    description: 'tanya kapan tidur',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        message.channel.send(`tidur tidur KERJA`)
+    }
+})
+
+client.createCommand({
+    category: 'random',
+    name: 'sholat',
+    aliases: ['sholat?'],
+    description: 'tanya kapan sholat',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        message.channel.send(`Gasss`)
+    }
+})
+
+client.createCommand({
+    category: 'random',
+    name: 'tobat',
+    aliases: ['tobat'],
+    description: 'tanya tobat',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        message.channel.send(`Astaghfirullah`)
+    }
+})
+
+client.createCommand({
+    category: 'random',
+    name: 'malas',
+    aliases: ['malas'],
+    description: 'JAngan malas',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        message.channel.send(`ril cuy`)
+    }
+})
+
+client.createCommand({
+    category: 'waktu',
+    name: 'piket',
+    aliases: ['siapa piket'],
+    cooldown: 2,
+    description: 'siapa piket',
+    execute: async (message, args, bot) => {
+        let date = new Date().getDay()
+        date--
+        console.log(date)
+        const userId = ['1120290576223453266', '552810939460747264',
+            '1169072843930214433', '870493155861102673']
+        message.channel.send(`nih piket nih <@${userId[date]}>`)
+    }
+})
+
+client.createCommand({
+    category: 'waktu',
+    name: 'besok-piket',
+    aliases: ['besok piket'],
+    cooldown: 2,
+    description: 'siapa piket',
+    execute: async (message, args, bot) => {
+        try {
+            let date = new Date().getDay()
+            console.log(date)
+            const userId = ['1120290576223453266', '552810939460747264',
+                '1169072843930214433', '870493155861102673']
+            message.channel.send(`nih besok piket nih <@${userId[date]}>`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+})
+
+// client.createCommand()
+
 function sendScheduledMessage() {
     console.log("Mengecek waktu...");
     const targetHour = 16;
     const targetMinute = 0;
 
-    const targetChannelId = '1114363992933159055'; // Ganti dengan ID saluran tujuan
+    const jamIstirahat = 12
+    const menitIstirahat = 0
+
+    const targetChannelId = '1170925839454584904'; // Ganti dengan ID saluran tujuan
 
     setInterval(() => {
         const now = new Date();
         const currentHour = now.getHours();
         let currentMinute = now.getMinutes();
-
+        // cek perintah pulang
         if (currentHour === targetHour && currentMinute === targetMinute) {
             console.log("Waktunya mengirim pesan!");
             currentMinute = currentMinute < 10 ? '0' + currentMinute : currentMinute
             const targetChannel = client.channels.cache.get(targetChannelId);
-
+            
             if (targetChannel) {
                 targetChannel.send(`Sudah jam ${currentHour}:${currentMinute} ga pengen pulang?`);
                 console.log('pesan sudah terkirim')
@@ -155,6 +282,22 @@ function sendScheduledMessage() {
                 console.error("Saluran tidak ditemukan!");
             }
         }
+        // cek perintah pulang
+
+        // Cek Perintah Istirahat
+        if (currentHour == jamIstirahat && currentMinute == menitIstirahat) {
+            console.log('waktunya kirim pesan istirahat')
+            currentMinute = currentMinute < 10 ? '0' + currentMinute : currentMinute
+            const targetChannel = client.channels.cache.get(targetChannelId)
+
+            if (targetChannel) {
+                targetChannel.send(`udah jam ${currentHour}:${currentMinute} ga pengen istirahat?`)
+            } else {
+                console.error("Gagal mengirim pesan")
+            }
+        }
+        // Cek Perintah Istirahat
+
     }, 45000); //periksa tiap 50 detik
 }
 
@@ -165,3 +308,4 @@ client.on('ready', () => {
 })
 
 client.login(process.env.TOKEN)
+console.log({Message: {Status: true, Message: "berhasil Login"}})
