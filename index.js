@@ -1,5 +1,8 @@
 require("dotenv").config()
 const config = require('./config')
+const express = require('express')
+const app = express()
+const port = 3000
 
 const Discord = require('djst-client')
 const client = new Discord.Client({
@@ -8,6 +11,9 @@ const client = new Discord.Client({
     initCommands: true
 })
 
+app.use('/', (req, res) => {
+    res.send("Ini Halaman Pertama")
+})
 
 // Help - list command
 client.generateHelpCommand();
@@ -343,3 +349,7 @@ client.on('ready', () => {
 
 client.login(process.env.TOKEN)
 console.log({ Message: { Status: true, Message: "berhasil Login" } })
+
+app.listen(port, () => {
+    console.log('express berhasil berjalan di port' + port)
+})
