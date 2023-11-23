@@ -132,6 +132,36 @@ client.createCommand({
     }
 })
 
+client.createCommand({
+    category: 'waktu',
+    name: 'puasa',
+    aliases: ['kapan puasa'],
+    description: 'tanya kapan puasa',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        const tanggalSekarang = new Date()
+        const puasa = new Date('2024-03-10')
+        const selisihHari = puasa - tanggalSekarang
+        const hasil = Math.ceil(selisihHari / (1000 * 3600 * 24))
+        message.channel.send(`Puasa ${hasil} hari lagi cooy 🤩`)
+    }
+})
+
+client.createCommand({
+    category: 'waktu',
+    name: 'selesai-puasa',
+    aliases: ['kapan selesai puasa'],
+    description: 'tanya kapan selesai puasa',
+    cooldown: 2,
+    execute: async (message, args, bot) => {
+        const tanggalSekarang = new Date()
+        const puasa = new Date('2024-04-9')
+        const selisihHari = puasa - tanggalSekarang
+        const hasil = Math.ceil(selisihHari / (1000 * 3600 * 24))
+        message.channel.send(`Puasa selesai ${hasil} hari lagi 😥`)
+    }
+})
+
 
 client.createCommand({
     category: 'waktu',
@@ -170,7 +200,11 @@ client.createCommand({
         let hasil = Math.ceil(itung / (1000 * 60))
         let hitungJam = hasil / 60
         let jam = Math.round(hitungJam)
-        message.channel.send(`Pulang masih sekitar ${jam} jam / ${hasil} menit lagi`)
+        if (hasil <= 0) {
+            message.channel.send("Lol kok masih di kantor???")
+        } else {
+            message.channel.send(`Pulang masih sekitar ${jam} jam / ${hasil} menit lagi`)
+        }
     }
 })
 
@@ -274,7 +308,7 @@ function sendScheduledMessage() {
             console.log("Waktunya mengirim pesan!");
             currentMinute = currentMinute < 10 ? '0' + currentMinute : currentMinute
             const targetChannel = client.channels.cache.get(targetChannelId);
-            
+
             if (targetChannel) {
                 targetChannel.send(`Sudah jam ${currentHour}:${currentMinute} ga pengen pulang?`);
                 console.log('pesan sudah terkirim')
@@ -308,4 +342,4 @@ client.on('ready', () => {
 })
 
 client.login(process.env.TOKEN)
-console.log({Message: {Status: true, Message: "berhasil Login"}})
+console.log({ Message: { Status: true, Message: "berhasil Login" } })
