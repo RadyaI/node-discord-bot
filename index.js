@@ -6,9 +6,9 @@ const port = 3000
 
 const Discord = require('djst-client')
 const client = new Discord.Client({
-    intents: ["GUILDS", "GUILD_MESSAGES"],
+    intents: ["GUILDS", "GUILD_MESSAGES"], 
     prefix: config.prefix,
-    initCommands: true
+    initCommands: true  
 })
 
 app.use('/', (req, res) => {
