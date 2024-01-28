@@ -15,6 +15,8 @@ app.use('/', (req, res) => {
     res.send("Ini Halaman Pertama")
 })
 
+
+
 // Help - list command
 client.generateHelpCommand();
 
