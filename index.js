@@ -3,12 +3,13 @@ const config = require('./config')
 const express = require('express')
 const app = express()
 const port = 3000
+const ROLE_ID = '1221457530102747229';
 
 const Discord = require('djst-client')
 const client = new Discord.Client({
-    intents: ["GUILDS", "GUILD_MESSAGES"], 
+    intents: ["GUILDS", "GUILD_MESSAGES"],
     prefix: config.prefix,
-    initCommands: true  
+    initCommands: true
 })
 
 app.use('/', (req, res) => {
@@ -16,9 +17,63 @@ app.use('/', (req, res) => {
 })
 
 
-
 // Help - list command
 client.generateHelpCommand();
+
+client.createCommand({
+    category: 'admin',
+    name: 'addrole',
+    aliases: ['ar'],
+    cooldown: 3,
+    description: 'Menambahkan peran kepada pengguna',
+    usage: '/addrole <username>',
+    execute: async (message, args, bot) => {
+        console.log('Command /addrole sedang dieksekusi.'); // Logging
+        // Memeriksa izin administrator
+        if (!message.member.permissions.has('ADMINISTRATOR')) {
+            console.log('Pengguna tidak memiliki izin administrator.'); // Logging
+            return message.reply('Anda tidak memiliki izin untuk menggunakan perintah ini.');
+        }
+
+        // Mendapatkan nama pengguna dari argumen
+        const username = args[0];
+        if (!username) {
+            console.log('Nama pengguna tidak ditemukan.'); // Logging
+            return message.reply('Harap masukkan nama pengguna.');
+        }
+
+        console.log('Nama pengguna:', username); // Logging
+
+        // Mendapatkan member berdasarkan nama pengguna
+        const member = message.guild.members.cache.find(member => member.user.username === username);
+        if (!member) {
+            console.log('Pengguna tidak ditemukan.'); // Logging
+            return message.reply(`Pengguna dengan nama pengguna ${username} tidak ditemukan.`);
+        }
+
+        console.log('Member ditemukan:', member.user.tag); // Logging
+
+        // Mendapatkan peran berdasarkan ID
+        const role = message.guild.roles.cache.get(ROLE_ID);
+        if (!role) {
+            console.log('Peran tidak ditemukan.'); // Logging
+            return message.reply(`Peran dengan ID ${ROLE_ID} tidak ditemukan.`);
+        }
+
+        console.log('Peran ditemukan:', role.name); // Logging
+
+        // Menambahkan peran ke pengguna
+        try {
+            await member.roles.add(role);
+            console.log('Peran berhasil ditambahkan.'); // Logging
+            message.reply(`Peran ${role.name} berhasil ditambahkan kepada pengguna ${member.user.username}.`);
+        } catch (error) {
+            console.error(error);
+            console.log('Terjadi kesalahan:', error.message); // Logging
+            message.reply(`Terjadi kesalahan saat menambahkan peran kepada pengguna ${member.user.username}.`);
+        }
+    }
+});
 
 
 client.createCommand({
@@ -134,9 +189,12 @@ client.createCommand({
     execute: async (message, args, bot) => {
         const tanggalSekarang = new Date()
         const selesaiPrakerin = new Date('2024-04-30')
+        const newSelesaiPrakerin = new Date('2024-04-08')
         const selisihHari = selesaiPrakerin - tanggalSekarang
+        const newSelisihHari = newSelesaiPrakerin - tanggalSekarang
         const hasil = Math.ceil(selisihHari / (1000 * 3600 * 24))
-        message.channel.send(`Prakerin mu sisa ${hasil} hari lagi`)
+        const newHasil = Math.ceil(newSelisihHari / (1000 * 3600 * 24))
+        message.channel.send(`Prakerin mu sisa ${hasil} hari lagi eh apa ${newHasil} hari lagi ya 😋`)
     }
 })
 
@@ -305,6 +363,9 @@ function sendScheduledMessage() {
     const jamIstirahat = 12
     const menitIstirahat = 0
 
+    const sahur = 3
+    const menitSahur = 25
+
     const targetChannelId = '1170925839454584904'; // Ganti dengan ID saluran tujuan
 
     setInterval(() => {
@@ -339,6 +400,20 @@ function sendScheduledMessage() {
             }
         }
         // Cek Perintah Istirahat
+
+        // Cek Perintah sahur
+        if (currentHour == sahur && currentMinute == menitSahur) {
+            console.log('waktunya kirim pesan sahur')
+            currentMinute = currentMinute < 10 ? '0' + currentMinute : currentMinute
+            const targetChannel = client.channels.cache.get(targetChannelId)
+
+            if (targetChannel) {
+                targetChannel.send(`Pe Sahur Kang`)
+            } else {
+                console.error("Gagal mengirim pesan")
+            }
+        }
+        // Cek Perintah sahur
 
     }, 45000); //periksa tiap 50 detik
 }
