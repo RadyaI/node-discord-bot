@@ -28,48 +28,48 @@ client.createCommand({
     description: 'Menambahkan peran kepada pengguna',
     usage: '/addrole <username>',
     execute: async (message, args, bot) => {
-        console.log('Command /addrole sedang dieksekusi.'); // Logging
+        console.log('Command /addrole sedang dieksekusi.');
         // Memeriksa izin administrator
         if (!message.member.permissions.has('ADMINISTRATOR')) {
-            console.log('Pengguna tidak memiliki izin administrator.'); // Logging
+            console.log('Pengguna tidak memiliki izin administrator.');
             return message.reply('Anda tidak memiliki izin untuk menggunakan perintah ini.');
         }
 
         // Mendapatkan nama pengguna dari argumen
         const username = args[0];
         if (!username) {
-            console.log('Nama pengguna tidak ditemukan.'); // Logging
+            console.log('Nama pengguna tidak ditemukan.');
             return message.reply('Harap masukkan nama pengguna.');
         }
 
-        console.log('Nama pengguna:', username); // Logging
+        console.log('Nama pengguna:', username); 
 
         // Mendapatkan member berdasarkan nama pengguna
         const member = message.guild.members.cache.find(member => member.user.username === username);
         if (!member) {
-            console.log('Pengguna tidak ditemukan.'); // Logging
+            console.log('Pengguna tidak ditemukan.');
             return message.reply(`Pengguna dengan nama pengguna ${username} tidak ditemukan.`);
         }
 
-        console.log('Member ditemukan:', member.user.tag); // Logging
+        console.log('Member ditemukan:', member.user.tag);
 
         // Mendapatkan peran berdasarkan ID
         const role = message.guild.roles.cache.get(ROLE_ID);
         if (!role) {
-            console.log('Peran tidak ditemukan.'); // Logging
+            console.log('Peran tidak ditemukan.');
             return message.reply(`Peran dengan ID ${ROLE_ID} tidak ditemukan.`);
         }
 
-        console.log('Peran ditemukan:', role.name); // Logging
+        console.log('Peran ditemukan:', role.name); 
 
         // Menambahkan peran ke pengguna
         try {
             await member.roles.add(role);
-            console.log('Peran berhasil ditambahkan.'); // Logging
+            console.log('Peran berhasil ditambahkan.');
             message.reply(`Peran ${role.name} berhasil ditambahkan kepada pengguna ${member.user.username}.`);
         } catch (error) {
             console.error(error);
-            console.log('Terjadi kesalahan:', error.message); // Logging
+            console.log('Terjadi kesalahan:', error.message); 
             message.reply(`Terjadi kesalahan saat menambahkan peran kepada pengguna ${member.user.username}.`);
         }
     }
