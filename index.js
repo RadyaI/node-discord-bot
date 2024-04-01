@@ -15,7 +15,9 @@ const client = new Discord.Client({
 app.use('/', (req, res) => {
     res.send("Ini Halaman Pertama")
 })
-
+setTimeout(() => {
+    console.log("bot berjalan normal")
+}, 5000);
 
 // Help - list command
 client.generateHelpCommand();
