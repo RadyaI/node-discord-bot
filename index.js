@@ -16,7 +16,7 @@ app.use('/', (req, res) => {
     res.send("Ini Halaman Pertama")
 })
 setTimeout(() => {
-    console.log("bot berjalan normal")
+    console.log("server berjalan normal")
 }, 5000);
 
 // Help - list command
