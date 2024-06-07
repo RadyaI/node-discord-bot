@@ -419,6 +419,7 @@ function sendScheduledMessage() {
 
     }, 45000); //periksa tiap 50 detik
 }
+
 client.login(process.env.TOKEN)
     .then(() => {
         console.log({ Message: { Status: true, Message: "Berhasil Login" } });
