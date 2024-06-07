@@ -419,8 +419,7 @@ function sendScheduledMessage() {
 
     }, 45000); //periksa tiap 50 detik
 }
-const token = "MTE3Mjc5OTkwMzk0NTIxNjAxMQ.G5rkZZ.GHqXVKn-gOAIJ8D4qZgNYB2xr9JpaCUV-yQTIU"
-client.login(token)
+client.login(process.env.TOKEN)
     .then(() => {
         console.log({ Message: { Status: true, Message: "Berhasil Login" } });
     })
