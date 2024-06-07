@@ -420,12 +420,6 @@ function sendScheduledMessage() {
     }, 45000); //periksa tiap 50 detik
 }
 
-
-client.on('ready', () => {
-    console.log("botnya udah ready")
-    sendScheduledMessage()
-})
-
 client.login(process.env.TOKEN)
     .then(() => {
         console.log({ Message: { Status: true, Message: "Berhasil Login" } });
@@ -434,6 +428,11 @@ client.login(process.env.TOKEN)
         console.error("Gagal login:", error);
     });
 
+
+client.on('ready', () => {
+    console.log("botnya udah ready")
+    sendScheduledMessage()
+})
 
 app.listen(port, () => {
     console.log('express berhasil berjalan di port' + port)
