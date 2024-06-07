@@ -419,8 +419,8 @@ function sendScheduledMessage() {
 
     }, 45000); //periksa tiap 50 detik
 }
-
-client.login("MTE3Mjc5OTkwMzk0NTIxNjAxMQ.G5rkZZ.GHqXVKn-gOAIJ8D4qZgNYB2xr9JpaCUV-yQTIU")
+const token = "MTE3Mjc5OTkwMzk0NTIxNjAxMQ.G5rkZZ.GHqXVKn-gOAIJ8D4qZgNYB2xr9JpaCUV-yQTIU"
+client.login(token)
     .then(() => {
         console.log({ Message: { Status: true, Message: "Berhasil Login" } });
     })
