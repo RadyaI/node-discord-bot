@@ -44,7 +44,7 @@ client.createCommand({
             return message.reply('Harap masukkan nama pengguna.');
         }
 
-        console.log('Nama pengguna:', username); 
+        console.log('Nama pengguna:', username);
 
         // Mendapatkan member berdasarkan nama pengguna
         const member = message.guild.members.cache.find(member => member.user.email === username);
@@ -62,7 +62,7 @@ client.createCommand({
             return message.reply(`Peran dengan ID ${ROLE_ID} tidak ditemukan.`);
         }
 
-        console.log('Peran ditemukan:', role.name); 
+        console.log('Peran ditemukan:', role.name);
 
         // Menambahkan peran ke pengguna
         try {
@@ -71,7 +71,7 @@ client.createCommand({
             message.reply(`Peran ${role.name} berhasil ditambahkan kepada pengguna ${member.user.username}.`);
         } catch (error) {
             console.error(error);
-            console.log('Terjadi kesalahan:', error.message); 
+            console.log('Terjadi kesalahan:', error.message);
             message.reply(`Terjadi kesalahan saat menambahkan peran kepada pengguna ${member.user.username}.`);
         }
     }
@@ -427,7 +427,13 @@ client.on('ready', () => {
 })
 
 client.login(process.env.TOKEN)
-console.log({ Message: { Status: true, Message: "berhasil Login" } })
+    .then(() => {
+        console.log({ Message: { Status: true, Message: "Berhasil Login" } });
+    })
+    .catch(error => {
+        console.error("Gagal login:", error);
+    });
+
 
 app.listen(port, () => {
     console.log('express berhasil berjalan di port' + port)
