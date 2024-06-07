@@ -408,7 +408,7 @@ function sendScheduledMessage() {
             console.log('waktunya kirim pesan sahur')
             currentMinute = currentMinute < 10 ? '0' + currentMinute : currentMinute
             const targetChannel = client.channels.cache.get(targetChannelId)
-
+// 
             if (targetChannel) {
                 targetChannel.send(`Pe Sahur Kang`)
             } else {
