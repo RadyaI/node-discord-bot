@@ -47,7 +47,7 @@ client.createCommand({
         console.log('Nama pengguna:', username); 
 
         // Mendapatkan member berdasarkan nama pengguna
-        const member = message.guild.members.cache.find(member => member.user.username === username);
+        const member = message.guild.members.cache.find(member => member.user.email === username);
         if (!member) {
             console.log('Pengguna tidak ditemukan.');
             return message.reply(`Pengguna dengan nama pengguna ${username} tidak ditemukan.`);
